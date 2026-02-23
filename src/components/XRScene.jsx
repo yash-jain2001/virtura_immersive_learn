@@ -44,10 +44,12 @@ function SceneContent({ onObjectClick }) {
   );
 }
 
-export default function XRScene({ onObjectClick }) {
+ function XRScene({ onObjectClick }) {
   return (
     <Canvas camera={{ position: [3, 3, 3], fov: 60 }}>
       <SceneContent onObjectClick={onObjectClick} />
     </Canvas>
   );
 }
+
+export default XRScene;
