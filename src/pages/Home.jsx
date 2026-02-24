@@ -28,7 +28,7 @@ export default function Home() {
             className="group px-8 py-4 bg-blue-600 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all duration-300 hover:scale-105 active:scale-95 animate-pulse-glow"
           >
             <span className="relative z-10 border border-white px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center">
-              Go to Training
+              Go to Training ➡️
             </span>
           </Link>
         </div>
