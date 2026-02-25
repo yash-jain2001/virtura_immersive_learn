@@ -10,11 +10,13 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex flex-1 flex-col items-center justify-center space-y-8 px-6 text-center">
         <div className="animate-fade-in-up space-y-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
+          <h1 className="text-5xl md:text-7xl sm:mt-5 font-extrabold tracking-tight">
             Welcome to{"  "}
             <span className="text-gradient">Virtura ImmersiveLearn</span>
           </h1>
-          <h2 className="text-5xl font-bold underline underline-offset-4">Virtual Today. Skilled Tomorrow.</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold underline underline-offset-4">
+            Virtual Today. Skilled Tomorrow.
+          </h2>
           <p className="text-white max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
             A next-generation web-based AR/VR training platform. Experience
             interactive 3D simulations that make learning intuitive and
