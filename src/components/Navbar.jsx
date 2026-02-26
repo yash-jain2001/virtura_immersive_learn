@@ -28,12 +28,20 @@ export default function Navbar() {
         {/* Logo / Title */}
         <Link
           to="/"
-          className="text-xl md:text-2xl font-extrabold tracking-tight group cursor-pointer flex items-center relative z-[110]"
+          className="text-xl md:text-2xl font-extrabold tracking-tight group cursor-pointer flex items-center gap-2 md:gap-3 relative z-[110]"
         >
+          <img
+            src="/logo.jpg"
+            alt="Virtura Logo"
+            className=" w-20 md:h-10 md:w-20 rounded-lg "
+          />
           <span className="text-white group-hover:text-blue-400 transition-colors duration-300">
             Virtura
           </span>
-          <span className="text-gradient pl-1"> Immersive Learn</span>
+          <span className="text-gradient hidden sm:inline pl-1">
+            {" "}
+            Immersive Learn
+          </span>
           <span className="ml-1 animate-float inline-block">🧑‍💻</span>
         </Link>
 

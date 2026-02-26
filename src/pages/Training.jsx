@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar";
 
 export default function Training() {
   const steps = [
-    { instruction: "Click the switch", target: "switch" },
-    { instruction: "Click the button", target: "button" },
+    { instruction: "Click the orange box", target: "switch" },
+    { instruction: "Click the blue box", target: "button" },
   ];
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
