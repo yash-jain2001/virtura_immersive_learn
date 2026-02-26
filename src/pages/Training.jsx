@@ -34,21 +34,33 @@ export default function Training() {
       {/* Navbar */}
       <Navbar />
       {/* UI Overlay */}
-      <div className="absolute top-16 left-4 z-10 bg-black/70 text-white px-4 py-2 rounded space-y-1">
-        <p className="font-semibold">Training Module</p>
+      <div className="absolute top-24 left-4 right-4 md:left-8 md:right-auto md:w-80 z-10 bg-black/60 backdrop-blur-md text-white p-4 rounded-xl border border-white/10 space-y-2 animate-fade-in-up">
+        <p className="font-bold text-blue-400 tracking-wide uppercase text-xs">
+          Training Module
+        </p>
 
         {currentStep ? (
-          <>
-            <p>
+          <div className="space-y-1">
+            <p className="text-sm text-gray-400">
               Step {currentStepIndex + 1} / {steps.length}
             </p>
-            <p className="font-semibold">👉 {currentStep.instruction}</p>
-          </>
+            <p className="font-semibold text-lg md:text-xl">
+              👉 {currentStep.instruction}
+            </p>
+          </div>
         ) : (
-          <p className="font-semibold text-green-400">Training Completed 🎉</p>
+          <p className="font-bold text-green-400 text-lg">
+            Training Completed 🎉
+          </p>
         )}
 
-        {feedback && <p>{feedback}</p>}
+        {feedback && (
+          <p
+            className={`text-sm font-medium px-2 py-1 rounded ${feedback.includes("✅") ? "bg-green-500/20 text-green-300" : "bg-red-500/20 text-red-300"}`}
+          >
+            {feedback}
+          </p>
+        )}
       </div>
 
       {/* 3D Scene */}
