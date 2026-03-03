@@ -1,5 +1,6 @@
 import { useState } from "react";
 import XRScene from "../components/XRScene";
+import xrStore from "../store/xrStore";
 import Navbar from "../components/Navbar";
 
 export default function Training() {
@@ -63,10 +64,7 @@ export default function Training() {
         )}
 
         <button
-          onClick={() => {
-            const arButton = document.querySelector("button");
-            if (arButton) arButton.click();
-          }}
+          onClick={() => xrStore.enterAR()}
           className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mt-2"
         >
           View in AR

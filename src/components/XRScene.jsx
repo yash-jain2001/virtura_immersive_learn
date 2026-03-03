@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { XR, ARButton } from "@react-three/xr";
+import { XR } from "@react-three/xr";
+import xrStore from "../store/xrStore";
 
 function SceneContent({ onObjectClick }) {
   return (
@@ -40,18 +41,10 @@ function SceneContent({ onObjectClick }) {
 
 export default function XRScene({ onObjectClick }) {
   return (
-    <>
-      {/* AR Button (automatically requests AR session) */}
-      <ARButton sessionInit={{ requiredFeatures: ["hit-test"] }} />
-
-      <Canvas
-        camera={{ position: [0, 1, 3], fov: 60 }}
-        gl={{ alpha: true }}
-      >
-        <XR>
-          <SceneContent onObjectClick={onObjectClick} />
-        </XR>
-      </Canvas>
-    </>
+    <Canvas camera={{ position: [0, 1, 3], fov: 60 }} gl={{ alpha: true }}>
+      <XR store={xrStore}>
+        <SceneContent onObjectClick={onObjectClick} />
+      </XR>
+    </Canvas>
   );
 }
