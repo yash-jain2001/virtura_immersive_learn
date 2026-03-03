@@ -56,11 +56,21 @@ export default function Training() {
 
         {feedback && (
           <p
-            className={`text-sm font-medium px-2 py-1 rounded ${feedback.includes("✅") ? "bg-green-500/20 text-green-300" : "bg-red-500/20 text-red-300"}`}
+            className={`text-sm font-medium px-2 py-1 rounded ${feedback.includes("✅") ? "bg-green-500 text-green-300" : "bg-red-500 text-red-300"}`}
           >
             {feedback}
           </p>
         )}
+
+        <button
+          onClick={() => {
+            const arButton = document.querySelector("button");
+            if (arButton) arButton.click();
+          }}
+          className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mt-2"
+        >
+          View in AR
+        </button>
       </div>
 
       {/* 3D Scene */}
