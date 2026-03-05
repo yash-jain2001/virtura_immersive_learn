@@ -52,10 +52,11 @@ function SceneContent({ onObjectClick }) {
   );
 }
 
-export default function XRScene({ onObjectClick }) {
+export default function XRScene({ onObjectClick, store }) {
+  const activeStore = store || xrStore;
   return (
     <Canvas camera={{ position: [0, 1, 3], fov: 60 }} gl={{ alpha: true }}>
-      <XR store={xrStore}>
+      <XR store={activeStore}>
         <SceneContent onObjectClick={onObjectClick} />
       </XR>
     </Canvas>
