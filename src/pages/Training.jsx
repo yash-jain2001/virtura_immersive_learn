@@ -11,7 +11,9 @@ export default function Training() {
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [feedbackKey, setFeedbackKey] = useState(0);
   const [xrStoreReady, setXrStoreReady] = useState(false);
+  const [isInAR, setIsInAR] = useState(false);
 
   const currentStep = steps[currentStepIndex];
 
@@ -38,6 +40,7 @@ export default function Training() {
   const enterAR = useCallback(() => {
     if (storeRef.current) {
       storeRef.current.enterAR();
+      setIsInAR(true);
     }
   }, []);
 
@@ -45,9 +48,8 @@ export default function Training() {
     if (!currentStep) return;
 
     if (objectName === currentStep.target) {
-      setFeedback("✅ Correct!");
-
       if (currentStepIndex < steps.length - 1) {
+        setFeedback("✅ Correct!");
         setCurrentStepIndex((prev) => prev + 1);
       } else {
         setFeedback("🎉 Training Complete!");
@@ -55,44 +57,77 @@ export default function Training() {
     } else {
       setFeedback("❌ Wrong object. Try again.");
     }
+
+    /* bump key to force the DOM element to re-create,
+       ensuring the AR overlay picks up the change */
+    setFeedbackKey((k) => k + 1);
   };
 
   /* ── Training HUD — shown in both desktop & AR overlay ─────── */
   const TrainingHUD = (
-    <>
-      <p className="font-bold text-blue-400 tracking-wide uppercase text-xs">
+    <div style={{ pointerEvents: "auto" }}>
+      <p
+        className="font-bold tracking-wide uppercase"
+        style={{ color: "#60a5fa", fontSize: isInAR ? "16px" : "12px" }}
+      >
         Training Module
       </p>
 
       {currentStep ? (
-        <div className="space-y-1">
-          <p className="text-sm text-gray-400">
+        <div style={{ marginTop: "8px" }}>
+          <p
+            style={{
+              color: "#d1d5db",
+              fontSize: isInAR ? "18px" : "14px",
+            }}
+          >
             Step {currentStepIndex + 1} / {steps.length}
           </p>
-          <p className="font-semibold text-lg md:text-xl">
+          <p
+            className="font-semibold"
+            style={{
+              color: "#ffffff",
+              fontSize: isInAR ? "22px" : "18px",
+              marginTop: "4px",
+            }}
+          >
             👉 {currentStep.instruction}
           </p>
         </div>
       ) : (
-        <p className="font-bold text-green-400 text-lg">
+        <p
+          className="font-bold"
+          style={{
+            color: "#4ade80",
+            fontSize: isInAR ? "22px" : "18px",
+          }}
+        >
           Training Completed 🎉
         </p>
       )}
 
       {feedback && (
         <p
-          className={`text-sm font-medium px-2 py-1 rounded ${
-            feedback.includes("✅")
-              ? "bg-green-500/30 text-green-300"
-              : feedback.includes("🎉")
-                ? "bg-green-500/30 text-green-300"
-                : "bg-red-500/30 text-red-300"
-          }`}
+          key={feedbackKey}
+          style={{
+            marginTop: "10px",
+            padding: "8px 14px",
+            borderRadius: "8px",
+            fontSize: isInAR ? "20px" : "14px",
+            fontWeight: 600,
+            color: feedback.includes("❌") ? "#fca5a5" : "#86efac",
+            backgroundColor: feedback.includes("❌")
+              ? "rgba(239,68,68,0.5)"
+              : "rgba(34,197,94,0.5)",
+            border: feedback.includes("❌")
+              ? "2px solid #ef4444"
+              : "2px solid #22c55e",
+          }}
         >
           {feedback}
         </p>
       )}
-    </>
+    </div>
   );
 
   return (
@@ -107,16 +142,36 @@ export default function Training() {
       */}
       <div
         ref={overlayRef}
-        className="absolute top-24 left-4 right-4 md:left-8 md:right-auto md:w-80 z-10 bg-black/60 backdrop-blur-md text-white p-4 rounded-xl border border-white/10 space-y-2 animate-fade-in-up"
+        style={{
+          position: "absolute",
+          top: isInAR ? "20px" : "96px",
+          left: isInAR ? "16px" : "16px",
+          right: isInAR ? "16px" : "16px",
+          zIndex: 9999,
+          backgroundColor: isInAR
+            ? "rgba(0, 0, 0, 0.85)"
+            : "rgba(0, 0, 0, 0.6)",
+          color: "#ffffff",
+          padding: isInAR ? "20px" : "16px",
+          borderRadius: "12px",
+          border: isInAR
+            ? "2px solid rgba(255,255,255,0.3)"
+            : "1px solid rgba(255,255,255,0.1)",
+          pointerEvents: "auto",
+          maxWidth: isInAR ? "none" : "320px",
+        }}
+        className="backdrop-blur-md"
       >
         {TrainingHUD}
 
-        <button
-          onClick={enterAR}
-          className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mt-2"
-        >
-          View in AR
-        </button>
+        {!isInAR && (
+          <button
+            onClick={enterAR}
+            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded mt-2"
+          >
+            View in AR
+          </button>
+        )}
       </div>
 
       {/* 3D Scene — only mount once the store is ready */}
